@@ -1,20 +1,19 @@
-"use client"
+import Footer from '@/components/Footer';
+import Navbar from '@/components/Navbar';
 import axios, { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
 
 export default function Page() {
-  const [data, setData] = useState<string | null>(null)
 
-  useEffect(() => {
-    axios.get("api/posts").then((response: AxiosResponse) => setData(response.data.message))
-  }, []);
-  console.log(data);
-  
 
   return (
-    <>
-      <h1>Next.js API Example</h1>
-      {data? <p>{data}</p> : <p>loading...</p>}
-    </>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <main className="flex-grow container mx-auto p-4">
+        <h1 className="text-2xl font-bold">Home welcome</h1>
+        <p className="text-lg">به لۆگێنینی ما خوش ئەمە</p>
+      </main>
+      <Footer />
+    </div>
   );
 }
