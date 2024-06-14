@@ -1,4 +1,5 @@
 // components/Navbar.js
+import Link from 'next/link';
 import React from 'react';
 
 const Navbar = () => {
@@ -7,9 +8,8 @@ const Navbar = () => {
       <div className="container mx-auto flex justify-between items-center">
         <div className="text-white text-lg font-bold">Dashboard</div>
         <div className="flex space-x-4">
-          <a href="#" className="text-gray-300 hover:text-white">Team</a>
-          <a href="#" className="text-gray-300 hover:text-white">Projects</a>
-          <a href="#" className="text-gray-300 hover:text-white">Calendar</a>
+          <Link href="/auth/register">register</Link>
+          <Link href="/auth/login">login</Link>
         </div>
       </div>
     </nav>

@@ -11,7 +11,6 @@ export default function Page() {
       <Navbar />
       <main className="flex-grow container mx-auto p-4">
         <h1 className="text-2xl font-bold">Home welcome</h1>
-        <p className="text-lg">به لۆگێنینی ما خوش ئەمە</p>
       </main>
       <Footer />
     </div>
