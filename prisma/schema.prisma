@@ -18,6 +18,7 @@ model user {
   name     String
   email    String @unique
   password String
+  phone    String?
   Posts    post[]
 }
 

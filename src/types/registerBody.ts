@@ -1,6 +1,6 @@
 export interface registerBody{
     email: string;
-    passworld: string;
+    passworld: any;
     name: string;
     phone?: string
 }
