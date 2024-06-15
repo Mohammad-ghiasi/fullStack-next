@@ -1,6 +1,10 @@
 "use client"
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useForm, SubmitHandler } from "react-hook-form";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface RegisterBody {
     email: string;
@@ -11,9 +15,20 @@ interface RegisterBody {
 
 export default function RegisterForm() {
     const { register, handleSubmit, reset, formState: { errors } } = useForm<RegisterBody>();
-    const onSubmit: SubmitHandler<RegisterBody> = (data) => {
+    const router = useRouter()
+    const onSubmit: SubmitHandler<RegisterBody> = (data: RegisterBody) => {
         console.log(data);
-        reset();
+        axios.post("http://localhost:3000/api/auth/register", data)
+            .then((res) => {
+                reset();
+                toast.success('login success!');
+                setTimeout(() => {
+                    router.push('/');
+                }, 1500);
+            })
+            .catch((error) => {
+                toast.error(error?.response.data.message);
+            })
     };
 
     return (
@@ -38,6 +53,10 @@ export default function RegisterForm() {
                                 pattern: {
                                     value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                                     message: 'Invalid email address',
+                                },
+                                minLength: {
+                                    value: 20,
+                                    message: 'minimun 20 chareketer'
                                 }
                             })}
                         />
@@ -56,7 +75,16 @@ export default function RegisterForm() {
                                 required: {
                                     value: true,
                                     message: 'Full name is required'
+                                },
+                                minLength: {
+                                    value: 5,
+                                    message: 'minimun 5 chareketer'
+                                },
+                                pattern: {
+                                    value: /^[^\d]*$/,
+                                    message: 'Numbers are not allowed'
                                 }
+
                             })}
                         />
                         {errors.name && <p className="text-red-500 text-xs italic mt-2">{errors.name.message}</p>}
@@ -87,6 +115,10 @@ export default function RegisterForm() {
                                 required: {
                                     value: true,
                                     message: 'Password is required'
+                                },
+                                minLength: {
+                                    value: 10,
+                                    message: 'minimun 10 chareketer'
                                 }
                             })}
                         />
@@ -95,12 +127,17 @@ export default function RegisterForm() {
                     <div className="flex items-center justify-between">
                         <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             Register
+
                         </button>
                     </div>
+
                 </form>
+
                 <p className="text-center text-gray-600 text-sm mt-4">
                     Already have an account? <a href="/auth/login" className="text-blue-500 hover:text-blue-700">Sign In</a>
                 </p>
+                <ToastContainer />
+
             </div>
         </div>
     );
